@@ -15,6 +15,7 @@ install: echo "skip bundle install"
 branches:
   only:
     - master
+    - server_tests
 
 services: docker
 
@@ -55,6 +56,10 @@ env:
   - INSTANCE=contrib-ubuntu-1604
   - INSTANCE=contrib-opensuse-132
   - INSTANCE=contrib-opensuse-leap
+  - INSTANCE=server-debian-7
+  - INSTANCE=server-debian-8
+  - INSTANCE=apt-pgdg-server-debian-7
+  - INSTANCE=apt-pgdg-server-debian-8
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
