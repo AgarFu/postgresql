@@ -82,9 +82,8 @@ unless node['postgresql']['server']['init_package'] == 'systemd'
 end
 
 if node['postgresql']['server']['init_package'] == 'systemd'
-
-  if node['platform_family'] == 'rhel'
-
+  case node['platform_family']
+  when 'rhel'
     template_path = if node['postgresql']['use_pgdg_packages']
                       "/etc/systemd/system/postgresql-#{node['postgresql']['version']}.service"
                     else
@@ -103,9 +102,6 @@ if node['postgresql']['server']['init_package'] == 'systemd'
       command 'systemctl daemon-reload'
       action :nothing
     end
-  end
-
-  case node['platform_family']
   when 'suse'
     execute "initdb -d #{node['postgresql']['dir']}" do
       user 'postgres'
@@ -116,19 +112,14 @@ if node['postgresql']['server']['init_package'] == 'systemd'
       not_if { ::File.exist?("#{node['postgresql']['config']['data_directory']}/PG_VERSION") }
     end
   end
-
 elsif !platform_family?('suse') && node['postgresql']['version'].to_f <= 9.3
-
   execute "/sbin/service #{svc_name} initdb #{initdb_locale}" do
     not_if { ::File.exist?("#{node['postgresql']['config']['data_directory']}/PG_VERSION") }
   end
-
 else
-
   execute "/sbin/service #{svc_name} initdb" do
     not_if { ::File.exist?("#{node['postgresql']['config']['data_directory']}/PG_VERSION") }
   end
-
 end
 
 service 'postgresql' do

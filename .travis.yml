@@ -56,10 +56,19 @@ env:
   - INSTANCE=contrib-ubuntu-1604
   - INSTANCE=contrib-opensuse-132
   - INSTANCE=contrib-opensuse-leap
+  - INSTANCE=server-centos-6
+  - INSTANCE=server-centos-7
   - INSTANCE=server-debian-7
   - INSTANCE=server-debian-8
+  - INSTANCE=server-fedora-25
+  - INSTANCE=server-opensuse-132
+  - INSTANCE=server-opensuse-leap
+  - INSTANCE=server-ubuntu-1404
+  - INSTANCE=server-ubuntu-1604
   - INSTANCE=apt-pgdg-server-debian-7
   - INSTANCE=apt-pgdg-server-debian-8
+  - INSTANCE=apt-pgdg-server-ubuntu-1404
+  - INSTANCE=apt-pgdg-server-ubuntu-1604
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
